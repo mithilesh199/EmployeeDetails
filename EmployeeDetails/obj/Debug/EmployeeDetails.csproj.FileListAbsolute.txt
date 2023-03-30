@@ -1,0 +1,15 @@
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\bin\Debug\EmployeeDetails.exe.config
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\bin\Debug\EmployeeDetails.exe
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\bin\Debug\EmployeeDetails.pdb
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\MainWindow.g.cs
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\App.g.cs
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\EmployeeDetails_MarkupCompile.cache
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\EmployeeDetails_MarkupCompile.lref
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\MainWindow.baml
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\EmployeeDetails.g.resources
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\EmployeeDetails.Properties.Resources.resources
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\EmployeeDetails.csproj.GenerateResource.cache
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\EmployeeDetails.csproj.CoreCompileInputs.cache
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\EmployeeDetails.exe
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\EmployeeDetails.pdb
+C:\Users\MITHILESH\source\repos\EmployeeDetails\EmployeeDetails\obj\Debug\EmployeeDetails.csproj.AssemblyReference.cache
