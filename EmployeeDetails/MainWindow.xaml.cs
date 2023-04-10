@@ -15,6 +15,11 @@ using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Data;
 using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
+using EmployeeDetails.Models;
+using System.Net;
+using System.IO;
 
 namespace EmployeeDetails
 {
@@ -24,25 +29,42 @@ namespace EmployeeDetails
     public partial class MainWindow : Window
     {
         HttpClient client = new HttpClient();
+
         public MainWindow()
         {
-            client.BaseAddress = new Uri("https://localhost:44324/api/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            //HttpClient client = new HttpClient();
+            //client.BaseAddress = new Uri("https://gorest.co.in/public/v2/users");
+            //client.DefaultRequestHeaders.Accept.Clear();
+            //client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            //InitializeComponent();
+            //HttpResponseMessage response = client.GetAsync("https://gorest.co.in/public/v2/users").Result;
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    var employees = response.Content.ReadAsAsync<IEnumerable<Employee>>().Result;
+            //    Employee.ItemsSource = employees;
+
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+            //}
+
+            // }
+            //public MainWindow()
+            //{
+
             InitializeComponent();
             LoadGrid();
+
+            //HttpClient client = new HttpClient();
+            //client.BaseAddress = new Uri("https://gorest.co.in/public/");
+            //client.DefaultRequestHeaders.Accept.Clear();
+            //client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            //InitializeComponent();
+
         }
 
         SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=Empdb;Integrated Security=True");
-
-        public void clearData()
-        {
-            id_txt.Clear();
-            name_txt.Clear();
-            age_txt.Clear();
-            gender_txt.Clear();
-            email_txt.Clear();
-        }
 
         public void LoadGrid()
         {
@@ -55,14 +77,50 @@ namespace EmployeeDetails
             datagrid.ItemsSource = dt.DefaultView;
         }
 
-        private void Cleardatabtn_Click(object sender, RoutedEventArgs e)
+        //private async void GetEmployees()
+        //{
+            
+
+        //    var response = await client.GetStringAsync("https://gorest.co.in/public/v2/users");
+        //    //var json = JsonConvert.SerializeObject(response);
+        //    var employees = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Employee>>(response);
+        //    //var employees = JsonConvert.DeserializeObject<List<Employee>>(json);
+        //    datagrid.DataContext = employees;
+        //}
+
+
+        private void Loaddatabtn_Click(object sender, RoutedEventArgs e)
         {
-            clearData();
+            //HttpClient client = new HttpClient();
+
+            //client.BaseAddress = new Uri("https://localhost:44324/api/");
+
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //var id = id_txt.Text.Trim();
+
+            //var url = "/api/Employee/GetAllEmployees" + id;
+
+            //HttpResponseMessage response = client.GetAsync(url).Result;
+
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    var employees = response.Content.ReadAsAsync<Employee>().Result;
+            //    MessageBox.Show("Employee Found : " + employees.Id + " " + employees.Name + " " + employees.Age + " " + employees.Gender + " " + employees.Email);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+            //}
+            LoadGrid();
+
+            //this.GetEmployees();
+
         }
 
         public bool isValid()
         {
-            
+
             if (name_txt.Text == string.Empty)
             {
                 MessageBox.Show("Name is required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -86,79 +144,123 @@ namespace EmployeeDetails
             return true;
         }
 
+        public void clearData()
+        {
+            id_txt.Clear();
+            name_txt.Clear();
+            age_txt.Clear();
+            gender_txt.Clear();
+            email_txt.Clear();
+        }
+
         private void Insertbtn_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (isValid())
-                {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO FirstTable VALUES (@Name, @Age, @Gender, @Email)",con);
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue("@Name", name_txt.Text);
-                    cmd.Parameters.AddWithValue("@Age", age_txt.Text);
-                    cmd.Parameters.AddWithValue("@Gender", gender_txt.Text);
-                    cmd.Parameters.AddWithValue("@Email", email_txt.Text);
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                    LoadGrid();
-                    MessageBox.Show("Sucessfully registered", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
-                    clearData();
-                }
-            }
-            catch(SqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }           
+            HttpClient client = new HttpClient();
 
-          
+            client.BaseAddress = new Uri("https://localhost:44324/api/");
+
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var employee = new Employee();
+
+            employee.Id = int.Parse(id_txt.Text);
+
+            employee.Name = name_txt.Text;
+
+            employee.Age = age_txt.Text;
+
+            employee.Gender = gender_txt.Text;
+
+            employee.Email = email_txt.Text;
+
+            var response = client.PostAsJsonAsync("/api/Employee/AddEmployee", employee).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Employee Added");
+
+                id_txt.Text = "";
+
+                name_txt.Text = "";
+
+                age_txt.Text = "";
+
+                gender_txt.Text = "";               
+
+            }
+            else
+            {
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+            }
 
         }
 
         private void Deletebtn_Click(object sender, RoutedEventArgs e)
         {
-            con.Open();
-            SqlCommand cmd = new SqlCommand("delete from FirstTable where ID = " + id_txt.Text + " ", con);
-            try
-            {
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Record Has Been Deleted","Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
-                con.Close();
-                clearData();
-                LoadGrid();
-                con.Close();
-            }
-            catch(SqlException ex)
-            {
-                MessageBox.Show("Not Deleted" +ex.Message);
+            HttpClient client = new HttpClient();
 
-            }
-            finally
+            client.BaseAddress = new Uri("https://localhost:44324/api/");
+
+            var id = id_txt.Text.Trim();
+
+            var url = "/api/Employee/DeleteEmployee/" + id;
+
+            HttpResponseMessage response = client.DeleteAsync(url).Result;
+
+            if (response.IsSuccessStatusCode)
             {
-                con.Close();
+                MessageBox.Show("User Deleted");
+            }
+            else
+            {
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
             }
         }
 
         private void Updatebtn_Click(object sender, RoutedEventArgs e)
         {
-            con.Open();
-            SqlCommand cmd = new SqlCommand("update FirstTable set Name = '"+name_txt.Text+"', Age = '"+age_txt.Text+"', Gender = '"+gender_txt.Text+"', Email = '"+email_txt.Text+"' where Id = " + id_txt.Text + " ", con);
+            HttpClient client = new HttpClient();
 
-            try
+            client.BaseAddress = new Uri("https://localhost:44324/api/");
+
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var employee = new Employee();
+
+            employee.Id = int.Parse(id_txt.Text);
+
+            employee.Name = name_txt.Text;
+
+            employee.Age = age_txt.Text;
+
+            employee.Gender = gender_txt.Text;
+
+            employee.Email = email_txt.Text;
+
+            var response = client.PutAsJsonAsync("/api/Employee/UpdateEmployee/", employee).Result;
+
+            if (response.IsSuccessStatusCode)
             {
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Record has been Updated Sucessfully", "Updated", MessageBoxButton.OK,MessageBoxImage.Information);
+                MessageBox.Show("Employee Updated");
+
+                id_txt.Text = "";
+
+                name_txt.Text = "";
+
+                age_txt.Text = "";
+
+                gender_txt.Text = "";               
+
             }
-            catch (SqlException ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
             }
-            finally
-            {
-                con.Close();
-                clearData();
-                LoadGrid();
-            }
+        }
+
+        private void Clearbtn_Click(object sender, RoutedEventArgs e)
+        {
+            clearData();
         }
     }
 }

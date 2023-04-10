@@ -8,6 +8,7 @@ namespace EmployeeDetails.Models
 {
     public class Employee
     {
+        public static IEnumerable<Employee> ItemsSource { get; internal set; }
         public int Id { get; set; }
 
         public string Name { get; set; }
