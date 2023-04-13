@@ -13,21 +13,34 @@
         </Grid.ColumnDefinitions>
         <Label Content="ID" HorizontalAlignment="Left" Margin="33,80,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.308,5.844"/>
         <Label Content="NAME" HorizontalAlignment="Left" Margin="23,127,0,0" VerticalAlignment="Top"/>
-        <Label Content="AGE" HorizontalAlignment="Left" Margin="23,188,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.962,6.12"/>
+        <Label Content="STATUS" HorizontalAlignment="Left" Margin="23,188,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.962,6.12"/>
         <Label Content="EMAIL" HorizontalAlignment="Left" Margin="23,284,0,0" VerticalAlignment="Top"/>
         <Label Content="GENDER" HorizontalAlignment="Left" Margin="22,234,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.955,0.818"/>
         <TextBox x:Name="name_txt" HorizontalAlignment="Left" Height="23" Margin="87,130,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.474,0.452"/>
-        <TextBox x:Name="age_txt" HorizontalAlignment="Left" Height="23" Margin="87,188,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.732,0.551"/>
+        <TextBox x:Name="status_txt" HorizontalAlignment="Left" Height="23" Margin="87,188,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.732,0.551"/>
         <TextBox x:Name="gender_txt" HorizontalAlignment="Left" Height="23" Margin="87,237,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.354,1.006"/>
         <TextBox x:Name="email_txt" HorizontalAlignment="Left" Height="23" Margin="87,287,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="id_txt" HorizontalAlignment="Left" Height="23" Margin="87,80,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.585,0.414"/>
-        <DataGrid x:Name="datagrid" HorizontalAlignment="Left" Height="230" Margin="31.8,80,0,0" VerticalAlignment="Top" Width="468" Grid.Column="1"/>
+        <DataGrid x:Name="datagrid" HorizontalAlignment="Left" Height="230" Margin="31.8,80,0,0" VerticalAlignment="Top" Width="468" Grid.Column="1"
+                  xmlns:my="http://schemas.microsoft.com/wpf/2008/toolkit"
+                  CanUserAddRows="True"
+                  ItemsSource="{Binding}"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="id" Binding="{Binding Path=id}"/>
+                <DataGridTextColumn Header="name" Binding="{Binding Path=name}"/>
+                <DataGridTextColumn Header="status" Binding="{Binding Path=status}"/>
+                <DataGridTextColumn Header="gender" Binding="{Binding Path=gender}"/>
+                <DataGridTextColumn Header="email" Binding="{Binding Path=email}"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Button x:Name="Insertbtn" Content="Insert Record" HorizontalAlignment="Left" Margin="144,352,0,0" VerticalAlignment="Top" Width="95" Height="38" Background="#FFDA3636" FontSize="14" FontWeight="Bold" FontFamily="Sitka Banner" Foreground="#FFF6EEEE" Click="Insertbtn_Click"/>
         <Button x:Name="Updatebtn" Content="Update Record" HorizontalAlignment="Left" Margin="50.8,352,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="1.444,0.479" Grid.Column="1" Height="38" Background="#FFDA3636" FontSize="14" FontWeight="Bold" FontFamily="Sitka Banner" Foreground="#FFF6EEEE" Click="Updatebtn_Click"/>
         <Button x:Name="Deletebtn" Content="Delete Record" HorizontalAlignment="Left" Margin="229.8,352,0,0" VerticalAlignment="Top" Width="88" Grid.Column="1" RenderTransformOrigin="2.196,0.479" Height="38" Background="#FFDA3636" FontSize="14" FontWeight="Bold" FontFamily="Sitka Banner" Foreground="#FFF6EEEE" Click="Deletebtn_Click"/>
         <Button x:Name="Loaddatabtn" Content="Load Record" HorizontalAlignment="Left" Margin="382.8,352,0,0" VerticalAlignment="Top" Width="97" Grid.Column="1" Height="38" Background="#FFDA3636" FontSize="14" FontWeight="Bold" FontFamily="Sitka Banner" Foreground="#FFF6EEEE" Click="Loaddatabtn_Click"/>
-        <Label Content="Employee Details" HorizontalAlignment="Left" Margin="9.8,28,0,0" VerticalAlignment="Top" Width="399" Grid.Column="1"/>
+        <Label Content="Employee Details" HorizontalAlignment="Left" Margin="172.8,28,-17.4,0" VerticalAlignment="Top" Width="399" Grid.Column="1"/>
         <Button x:Name="Cleardatabtn" Content="Clear Record" HorizontalAlignment="Left" Margin="33,352,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="2.196,0.479" Height="38" Background="#FFDA3636" FontSize="14" FontWeight="Bold" FontFamily="Sitka Banner" Foreground="#FFF6EEEE" Click="Clearbtn_Click"/>
+        <Label x:Name="lblMessage" Content="" HorizontalAlignment="Left" Margin="87,28,0,0" VerticalAlignment="Top" Width="131"/>
 
     </Grid>
 </Window>
